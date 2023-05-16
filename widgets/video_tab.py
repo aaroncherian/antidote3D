@@ -51,6 +51,7 @@ class VideoTab(QWidget):
         # Initialize a matplotlib figure and add it to a canvas widget
         self.fig = Figure()
         self.canvas = FigureCanvasQTAgg(self.fig)
+
         self.secondary_layout.addWidget(self.canvas)
 
         # Add the joint list to the right side of the video
@@ -73,7 +74,10 @@ class VideoTab(QWidget):
                 width: 13px;
                 height: 13px;
             }
+
         """)
+
+        
 
     def update_frame(self, value):
         # Get the specified frame
@@ -105,6 +109,10 @@ class VideoTab(QWidget):
                 ax.scatter(joint[0],joint[1], color = 'white', s = 4)
 
         # Refresh the canvas
+        self.fig.subplots_adjust(left=0, right=1, bottom=0, top=1)
+        # self.canvas.setFixedSize(width, height)
+
+
         self.canvas.draw()
 
     def update_joints(self):

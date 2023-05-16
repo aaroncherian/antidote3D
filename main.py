@@ -49,12 +49,13 @@ class MainWindow(QMainWindow):
                 video_tab = VideoTab(video_path, self.joint_data_loader, i)
                 self.tab_widget.addTab(video_tab, video_path.name)
 
+        self.setStyleSheet("background-color: #F6F9F8;")  # Set background color to white
 
         self.setCentralWidget(self.tab_widget)
 
 
 def main():
-    video_folder = Path(r'D:\footropter_pilot_04_19_23\1.0_recordings\recordings_calib_3\sesh_2023-04-19_16_40_09_MDN_antidote')  # replace with your actual folder path
+    video_folder = Path(r'D:\2023-05-10_session_aaron_michael_jon_milo\1.0_recordings\calibration_one\sesh_2023-05-10_16_31_56_JSM_')  # replace with your actual folder path
 
     app = QApplication([])
     window = MainWindow(video_folder)
