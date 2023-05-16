@@ -10,6 +10,7 @@ import numpy as np
 from typing import Union
 
 from widgets.video_tab import VideoTab
+from widgets.main_window_tab import MainTab
 from utils.joint_data_loader import JointDataLoader
 
 class FileManager:
@@ -38,15 +39,16 @@ class MainWindow(QMainWindow):
 
 
         self.joint_data_loader = JointDataLoader(joint_2d_data)
-
+        
+        save_tab = MainTab(self.joint_data_loader)
+        self.tab_widget.addTab(save_tab, "Save")
+    
         # Load each video in the video folder into a new tab
         for i, video_path in enumerate(video_folder_path.iterdir()):
             if video_path.suffix in ['.mp4', '.avi']:  # add more video formats if needed
                 video_tab = VideoTab(video_path, self.joint_data_loader, i)
                 self.tab_widget.addTab(video_tab, video_path.name)
 
-        # save_tab = SaveTab(self.joint_data_loader)
-        # self.tab_widget.addTab(save_tab, "Save")
 
         self.setCentralWidget(self.tab_widget)
 

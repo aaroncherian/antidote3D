@@ -134,27 +134,6 @@ class CheckBoxList(QWidget):
         return checked_items
 
 
-class SaveTab(QWidget):
-    def __init__(self, joint_data_loader):
-        super().__init__()
-        self.joint_data_loader = joint_data_loader
-
-        self.layout = QVBoxLayout()
-        self.setLayout(self.layout)
-
-        self.path_label = QLabel("Save Path:")
-        self.layout.addWidget(self.path_label)
-
-        self.path_input = QLineEdit()
-        self.layout.addWidget(self.path_input)
-
-        self.save_button = QPushButton("Save Data")
-        self.save_button.clicked.connect(self.save_data)
-        self.layout.addWidget(self.save_button)
-
-    def save_data(self):
-        path = Path(self.path_input.text())
-        np.save(path / 'mediapipe2dData_numCams_numFrames_numTrackedPoints_pixelXY.npy', self.joint_data_loader.joint_data)
 
     
 class VideoTab(QWidget):
