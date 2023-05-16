@@ -6,18 +6,18 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QTabWidget, QVBoxLayout, 
 from PyQt6.QtCore import Qt
 from pathlib import Path
 
+from utils.mediapipe_joints import joint_groups
+
 import numpy as np
 
 from typing import Union
+
 
 class CheckBoxList(QWidget):
     def __init__(self, items):
         super().__init__()
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
-
-        # self.list_widget = QListWidget()
-        # self.layout.addWidget(self.list_widget)
 
         self.checkboxes = []  # Add this line to initialize a list to store the checkboxes
 

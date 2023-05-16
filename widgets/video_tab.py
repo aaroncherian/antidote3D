@@ -1,3 +1,15 @@
+
+import cv2
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
+from matplotlib.figure import Figure
+from PyQt6.QtWidgets import QApplication, QMainWindow, QTabWidget, QVBoxLayout, QHBoxLayout, QSlider, QWidget, QCheckBox, QPushButton, QGroupBox, QLabel, QLineEdit
+from PyQt6.QtCore import Qt
+from pathlib import Path
+
+from utils.mediapipe_joints import mediapipe_indices
+from widgets.checkbox_list_widget import CheckBoxList
+import numpy as np
+
 class VideoLoader:
     def __init__(self, video_path):
         self.video = cv2.VideoCapture(str(video_path))

@@ -9,37 +9,8 @@ import numpy as np
 
 from typing import Union
 
-class JointDataLoader:
-    def __init__(self, joint_2d_data):
-        self.original_joint_data = joint_2d_data
-        self.joint_data = np.copy(self.original_joint_data)
-        self.plotting_joint_data = self.joint_data[:, :, :33, :]
-
-    def get_joints(self, camera_num, frame_num):
-        return self.plotting_joint_data[camera_num, frame_num]
-
-    def remove_joint(self, camera_num, joint_num):
-        # Make sure the joint number and camera number are within bounds
-        if joint_num < 0 or joint_num >= self.joint_data.shape[2]:
-            raise ValueError("Invalid joint number")
-        if camera_num < 0 or camera_num >= self.joint_data.shape[0]:
-            raise ValueError("Invalid camera number")
-
-        # Set the joint data for the specified joint to NaN for the specified camera across all frames
-        self.plotting_joint_data[camera_num, :, joint_num,:] = np.nan
-        self.joint_data[camera_num, :, joint_num,:] = np.nan
-
-    def reinstate_joint(self, camera_num, joint_num):
-        # Make sure the joint number and camera number are within bounds
-        if joint_num < 0 or joint_num >= self.joint_data.shape[2]:
-            raise ValueError("Invalid joint number")
-        if camera_num < 0 or camera_num >= self.joint_data.shape[0]:
-            raise ValueError("Invalid camera number")
-
-        # Set the joint data for the specified joint to the original value for the specified camera across all frames
-        self.plotting_joint_data[camera_num, :, joint_num,:] = self.original_joint_data[camera_num, :, joint_num]
-        self.joint_data[camera_num, :, joint_num,:] = self.original_joint_data[camera_num, :, joint_num]
-
+from widgets.video_tab import VideoTab
+from utils.joint_data_loader import JointDataLoader
 
 class FileManager:
     def __init__(self, recording_session_folder_path: Union[str,Path]):
@@ -60,22 +31,22 @@ class MainWindow(QMainWindow):
         self.setWindowTitle('Video Viewer')
         self.tab_widget = QTabWidget()
 
-        self.file_manager = FileManager()
+        self.file_manager = FileManager(recording_session_folder_path)
 
-        joint_2d_data = self.file_manager.get_joint_2d_data_path
-        video_folder_path = self.file_manager.get_video_folder_path
+        joint_2d_data = self.file_manager.get_joint_2d_data()
+        video_folder_path = self.file_manager.get_video_folder_path()
 
 
         self.joint_data_loader = JointDataLoader(joint_2d_data)
 
         # Load each video in the video folder into a new tab
-        for i, video_path in enumerate(video_folder.iterdir()):
+        for i, video_path in enumerate(video_folder_path.iterdir()):
             if video_path.suffix in ['.mp4', '.avi']:  # add more video formats if needed
                 video_tab = VideoTab(video_path, self.joint_data_loader, i)
                 self.tab_widget.addTab(video_tab, video_path.name)
 
-        save_tab = SaveTab(self.joint_data_loader)
-        self.tab_widget.addTab(save_tab, "Save")
+        # save_tab = SaveTab(self.joint_data_loader)
+        # self.tab_widget.addTab(save_tab, "Save")
 
         self.setCentralWidget(self.tab_widget)
 
