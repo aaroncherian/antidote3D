@@ -4,7 +4,7 @@ import shutil
 from pathlib import Path
 from typing import Union
 
-from utils.reconstruct_3d import (
+from utils.reconstruction import (
     freemocap_anipose,)
 
 

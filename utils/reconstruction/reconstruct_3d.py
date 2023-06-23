@@ -1,5 +1,5 @@
 import numpy as np
-from utils.reconstruct_3d.anipose_object_loader import load_anipose_calibration_toml_from_path
+from utils.reconstruction.anipose_object_loader import load_anipose_calibration_toml_from_path
 import multiprocessing
 
 
