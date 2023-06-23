@@ -12,7 +12,6 @@ from utils.reconstruction import (
 
 def load_anipose_calibration_toml_from_path(
         camera_calibration_data_toml_path: Union[str, Path],
-        save_copy_of_calibration_to_this_path: Union[str, Path],
 ):
     try:
         anipose_calibration_object = freemocap_anipose.CameraGroup.load(str(camera_calibration_data_toml_path))
