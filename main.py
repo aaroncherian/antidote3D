@@ -27,7 +27,10 @@ class FileManager:
         return self.video_folder_path
     
     def get_joint_2d_data(self):
-        return np.load(self.joint_2d_data_path)
+
+        joint_2d_data_all = np.load(self.joint_2d_data_path)
+        joint_2d_data_xy = joint_2d_data_all[:,:,:,0:2]
+        return joint_2d_data_xy
     
 class ReconstructedDataHolder:
     def __init__(self, calibration_toml_path,joint_data_loader):
