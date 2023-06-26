@@ -11,8 +11,8 @@ from typing import Union
 
 from widgets.video_tab import VideoTab
 from widgets.main_window_tab import MainTab
-from utils.joint_data_loader import JointDataLoader
-from utils.reconstruction.reconstruct_3d import process_2d_data_to_3d
+from utils.joint_data_holder import JointDataHolder
+from utils.reconstructed_data_holder import ReconstructedDataHolder
 import os
 
 class FileManager:
@@ -32,15 +32,6 @@ class FileManager:
         joint_2d_data_xy = joint_2d_data_all[:,:,:,0:2]
         return joint_2d_data_xy
     
-class ReconstructedDataHolder:
-    def __init__(self, calibration_toml_path,joint_data_loader):
-        self.calibration_toml_path = calibration_toml_path
-        self.joint_data_loader = joint_data_loader
-    
-    def reconstruct_new_3d_data(self):
-        data_3d, repro_error = process_2d_data_to_3d(mediapipe_2d_data=self.joint_data_loader.joint_data, calibration_toml_path=self.calibration_toml_path, mediapipe_confidence_cutoff_threshold=.5)
-        
-
 class MainWindow(QMainWindow):
     def __init__(self, recording_session_folder_path: Union[str,Path], calibration_toml_path: Union[str,Path]):
         super().__init__()
@@ -53,12 +44,12 @@ class MainWindow(QMainWindow):
         video_folder_path = self.file_manager.get_video_folder_path()
 
 
-        self.joint_data_loader = JointDataLoader(joint_2d_data)
+        self.joint_data_loader = JointDataHolder(joint_2d_data)
         self.reconstructed_data_holder = ReconstructedDataHolder(calibration_toml_path,self.joint_data_loader)
 
-        self.reconstructed_data_holder.reconstruct_new_3d_data()
+        # self.reconstructed_data_holder.reconstruct_new_3d_data()
 
-        save_tab = MainTab(self.joint_data_loader)
+        save_tab = MainTab(self.joint_data_loader, self.reconstructed_data_holder)
         self.tab_widget.addTab(save_tab, "Save")
     
         # Load each video in the video folder into a new tab
@@ -67,7 +58,7 @@ class MainWindow(QMainWindow):
                 video_tab = VideoTab(video_path, self.joint_data_loader, i)
                 self.tab_widget.addTab(video_tab, video_path.name)
 
-        self.setStyleSheet("background-color: #F6F9F8;")  # Set background color to white
+        # self.setStyleSheet("background-color: #F6F9F8;")  # Set background color to white
 
         self.setCentralWidget(self.tab_widget)
 
@@ -76,6 +67,7 @@ def main():
     video_folder = Path(r'D:\2023-05-10_session_aaron_michael_jon_milo\1.0_recordings\calibration_one\sesh_2023-05-10_16_31_56_JSM_')  # replace with your actual folder path
     calibration_toml_path = Path(r"D:\2023-05-10_session_aaron_michael_jon_milo\1.0_recordings\calibration_one\sesh_2023-05-10_15_24_07_calibration_01\sesh_2023-05-10_15_24_07_calibration_01_camera_calibration.toml")
     app = QApplication([])
+    # app.setStyleSheet("QPushButton { background-color: blue; color: black; }")
     window = MainWindow(video_folder, calibration_toml_path)
     window.show()
     app.exec()

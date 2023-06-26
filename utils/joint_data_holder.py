@@ -1,6 +1,6 @@
 import numpy as np
 
-class JointDataLoader:
+class JointDataHolder:
     def __init__(self, joint_2d_data):
         self.original_joint_data = joint_2d_data
         self.joint_data = np.copy(self.original_joint_data)
