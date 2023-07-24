@@ -106,7 +106,7 @@ class VideoTab(QWidget):
         # Plot the 2D joints on the figure
         if valid_joints:  # only plot if there are valid joints
             for joint in valid_joints:
-                ax.scatter(joint[0],joint[1], color = 'white', s = 4)
+                ax.scatter(joint[0],joint[1], color = 'red', s = 6)
 
         # Refresh the canvas
         self.fig.subplots_adjust(left=0, right=1, bottom=0, top=1)

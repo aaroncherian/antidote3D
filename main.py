@@ -20,7 +20,7 @@ class FileManager:
         self.recording_session_folder_path = recording_session_folder_path
         
         self.video_folder_path = recording_session_folder_path/'synchronized_videos'
-        self.joint_2d_data_path = recording_session_folder_path/ 'output_data' / 'raw_data' / 'mediapipe2dData_numCams_numFrames_numTrackedPoints_pixelXY.npy'
+        self.joint_2d_data_path = recording_session_folder_path/ 'output_data' / 'raw_data' / 'dlc_leg_2d.npy'
         f = 2
 
     def get_video_folder_path(self):
@@ -29,7 +29,7 @@ class FileManager:
     def get_joint_2d_data(self):
 
         joint_2d_data_all = np.load(self.joint_2d_data_path)
-        joint_2d_data_xy = joint_2d_data_all[:,:,:,0:2]
+        joint_2d_data_xy = joint_2d_data_all[:,:,:,:]
         return joint_2d_data_xy
     
 class MainWindow(QMainWindow):
@@ -64,8 +64,8 @@ class MainWindow(QMainWindow):
 
 
 def main():
-    video_folder = Path(r'D:\2023-05-10_session_aaron_michael_jon_milo\1.0_recordings\calibration_one\sesh_2023-05-10_16_31_56_JSM_')  # replace with your actual folder path
-    calibration_toml_path = Path(r"D:\2023-05-10_session_aaron_michael_jon_milo\1.0_recordings\calibration_one\sesh_2023-05-10_15_24_07_calibration_01\sesh_2023-05-10_15_24_07_calibration_01_camera_calibration.toml")
+    video_folder = Path(r'D:\2023-06-07_JH\1.0_recordings\treadmill_calib\sesh_2023-06-07_12_06_15_JH_flexion_neutral_trial_1')  # replace with your actual folder path
+    calibration_toml_path = Path(r"D:\2023-06-07_JH\1.0_recordings\treadmill_calib\sesh_2023-06-07_11_10_50_treadmill_calibration_01\sesh_2023-06-07_11_10_50_treadmill_calibration_01_camera_calibration.toml")
     app = QApplication([])
     # app.setStyleSheet("QPushButton { background-color: blue; color: black; }")
     window = MainWindow(video_folder, calibration_toml_path)

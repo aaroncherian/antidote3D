@@ -14,12 +14,6 @@ class ScatterPlot3DWidget(QWidget):
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
 
-        # 3D Scatter Plot
-        self.figure = Figure(figsize=(5, 5), dpi=100)
-        self.canvas = FigureCanvasQTAgg(self.figure)
-        self.ax = self.figure.add_subplot(111, projection='3d')
-        self.layout.addWidget(self.canvas)
-
         # Slider Layout
         self.slider_layout = QHBoxLayout()
         self.layout.addLayout(self.slider_layout)
@@ -27,6 +21,14 @@ class ScatterPlot3DWidget(QWidget):
         # Frame label
         self.frame_label = QLabel("Frame 0")
         self.slider_layout.addWidget(self.frame_label)
+
+
+        # 3D Scatter Plot
+        self.figure = Figure(figsize=(5, 5), dpi=100)
+        self.canvas = FigureCanvasQTAgg(self.figure)
+        self.ax = self.figure.add_subplot(111, projection='3d')
+        self.layout.addWidget(self.canvas)
+
 
         # Slider
         self.slider = QSlider(Qt.Orientation.Horizontal)
@@ -120,7 +122,7 @@ class MainTab(QWidget):
 
     def save_data(self):
         path = Path(self.path_input.text())
-        np.save(path / 'mediapipe2dData_numCams_numFrames_numTrackedPoints_pixelXY.npy', self.joint_data_holder.joint_data)
+        # np.save(path / 'mediapipe2dData_numCams_numFrames_numTrackedPoints_pixelXY.npy', self.joint_data_holder.joint_data)
 
     def reconstruct_3d_data(self):
         # Get the start and end frame numbers from the input fields
