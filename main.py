@@ -64,8 +64,8 @@ class MainWindow(QMainWindow):
 
 
 def main():
-    video_folder = Path(r'D:\2023-05-10_session_aaron_michael_jon_milo\1.0_recordings\calibration_one\sesh_2023-05-10_16_31_56_JSM_')  # replace with your actual folder path
-    calibration_toml_path = Path(r"D:\2023-05-10_session_aaron_michael_jon_milo\1.0_recordings\calibration_one\sesh_2023-05-10_15_24_07_calibration_01\sesh_2023-05-10_15_24_07_calibration_01_camera_calibration.toml")
+    video_folder = Path(r'D:\2023-07-26_SBT002\sesh_2023-07-26_14_19_10_STB002_NIH_Trial1')  # replace with your actual folder path
+    calibration_toml_path = Path(r"D:\2023-07-26_SBT002\sesh_2023-07-26_13_54_56_SBT-002_calibration\sesh_2023-07-26_13_54_56_SBT-002_calibration_camera_calibration.toml")
     app = QApplication([])
     # app.setStyleSheet("QPushButton { background-color: blue; color: black; }")
     window = MainWindow(video_folder, calibration_toml_path)
